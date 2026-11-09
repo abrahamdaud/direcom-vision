@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#10151f">
+  <title>Direcom Vision</title>
+  <style>
+    :root{color-scheme:dark;--bg:#10151f;--panel:#171f2c;--line:#283548;--text:#e7edf7;--muted:#91a0b5;--green:#57e3ad;--blue:#77a9ff;--red:#ff7f8b}*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 10% 0%,#1a2a3b 0,transparent 42%),var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,Segoe UI,sans-serif}.wrap{max-width:1280px;margin:auto;padding:28px 22px}.top{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:22px}.brand{display:flex;align-items:center;gap:13px}.logo{width:42px;height:42px;border-radius:13px;background:linear-gradient(135deg,#57e3ad,#77a9ff);display:grid;place-items:center;color:#10151f;font-weight:900;font-size:20px}.brand h1{font-size:21px;margin:0}.brand p,.sub{margin:2px 0 0;color:var(--muted)}.pill{border:1px solid var(--line);border-radius:999px;padding:7px 12px;color:var(--muted)}.dot{display:inline-block;width:8px;height:8px;background:var(--green);border-radius:50%;margin-right:7px;box-shadow:0 0 12px #57e3ad}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:18px 0}.card,.panel{background:linear-gradient(150deg,#1a2432,#141b27);border:1px solid var(--line);border-radius:14px}.card{padding:16px}.label{color:var(--muted);font-size:12px}.value{font-size:25px;font-weight:700;margin-top:3px}.grid{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(300px,.8fr);gap:14px}.panel{overflow:hidden}.panel-head{padding:15px 17px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}.panel-head h2{font-size:14px;margin:0}.search{background:#101722;color:var(--text);border:1px solid var(--line);padding:8px 10px;border-radius:8px;outline:none;width:min(220px,50%)}.tree,.events{padding:8px 14px;max-height:58vh;overflow:auto}.row,.event{display:flex;align-items:center;gap:9px;padding:7px 4px;border-bottom:1px solid #222d3b;min-width:0}.row:last-child,.event:last-child{border:0}.icon{width:18px;text-align:center;color:var(--blue)}.path{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1}.size,.time{color:var(--muted);font-size:12px;white-space:nowrap}.badge{font-size:10px;text-transform:uppercase;letter-spacing:.06em;padding:3px 6px;border-radius:5px;background:#263344;color:var(--muted)}.created{color:var(--green)}.modified{color:var(--blue)}.deleted{color:var(--red)}.event .path{font-size:12px}.empty{padding:20px;color:var(--muted);text-align:center}.foot{display:flex;justify-content:space-between;color:var(--muted);font-size:12px;margin-top:14px}@media(max-width:800px){.grid{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)}.top{align-items:flex-start;flex-direction:column}.tree,.events{max-height:42vh}}
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <header class="top"><div class="brand"><div class="logo">D</div><div><h1>Direcom Vision</h1><p>Real-time filesystem tree monitor</p></div></div><div class="pill"><span class="dot"></span><span id="status">Connecting…</span></div></header>
+    <section class="stats"><div class="card"><div class="label">FILES</div><div class="value" id="files">—</div></div><div class="card"><div class="label">DIRECTORIES</div><div class="value" id="dirs">—</div></div><div class="card"><div class="label">TOTAL SIZE</div><div class="value" id="bytes">—</div></div><div class="card"><div class="label">RECENT CHANGES</div><div class="value" id="change-count">0</div></div></section>
+    <section class="grid"><div class="panel"><div class="panel-head"><h2>Monitored tree</h2><input id="filter" class="search" placeholder="Filter paths…" aria-label="Filter paths"></div><div id="tree" class="tree"><div class="empty">Waiting for first snapshot…</div></div></div><div class="panel"><div class="panel-head"><h2>Activity</h2><span class="sub">Latest changes</span></div><div id="events" class="events"><div class="empty">No changes detected yet.</div></div></div></section>
+    <footer class="foot"><span id="root"></span><span id="updated">Waiting for data</span></footer>
+  </main>
+<script>
+(() => {
+  const el = id => document.getElementById(id);
+  let snapshot = null, lastFetch = 0, busy = false;
+  const formatBytes = n => { if (!n) return '0 B'; const units=['B','KB','MB','GB','TB']; let i=0; while(n>=1024&&i<units.length-1){n/=1024;i++} return `${n.toFixed(i?1:0)} ${units[i]}` };
+  const safeTime = value => { const date=new Date(value); return Number.isNaN(date.getTime())?'':date.toLocaleTimeString() };
+  function render(){
+    const query=el('filter').value.toLowerCase();
+    if(snapshot){
+      const entries=snapshot.entries||[], files=entries.filter(x=>!x.isDir), dirs=entries.filter(x=>x.isDir);
+      el('files').textContent=files.length.toLocaleString(); el('dirs').textContent=dirs.length.toLocaleString();
+      el('bytes').textContent=formatBytes(files.reduce((sum,x)=>sum+x.size,0));
+      el('change-count').textContent=(snapshot.events||[]).length.toLocaleString(); el('root').textContent=snapshot.root;
+      el('updated').textContent=`Snapshot ${safeTime(snapshot.updatedAt)} · UI target 60 FPS`;
+      el('status').textContent=snapshot.error?`Scan warning: ${snapshot.error}`:'Monitoring';
+      const tree=entries.filter(x=>x.path!=='.'&&x.path.toLowerCase().includes(query));
+      const treeBox=el('tree'); treeBox.replaceChildren();
+      if(!tree.length){treeBox.innerHTML='<div class="empty">No matching paths.</div>'}
+      else tree.forEach(item=>{const row=document.createElement('div');row.className='row';row.style.paddingLeft=`${Math.min(item.path.split('/').length-1,12)*14+4}px`;const icon=document.createElement('span');icon.className='icon';icon.textContent=item.isDir?'▸':'·';const path=document.createElement('span');path.className='path';path.textContent=item.path;const size=document.createElement('span');size.className='size';size.textContent=item.isDir?'':formatBytes(item.size);row.append(icon,path,size);treeBox.append(row)});
+      const events=(snapshot.events||[]).slice().reverse(); const eventBox=el('events');eventBox.replaceChildren();
+      if(!events.length){eventBox.innerHTML='<div class="empty">No changes detected yet.</div>'}
+      else events.slice(0,100).forEach(item=>{const row=document.createElement('div');row.className='event';const badge=document.createElement('span');badge.className=`badge ${item.type}`;badge.textContent=item.type;const path=document.createElement('span');path.className='path';path.textContent=item.path;path.title=item.path;const time=document.createElement('span');time.className='time';time.textContent=safeTime(item.at);row.append(badge,path,time);eventBox.append(row)});
+    }
+    requestAnimationFrame(render);
+  }
+  async function poll(){
+    if(!busy){busy=true;try{const response=await fetch('/api/snapshot',{cache:'no-store'});if(!response.ok)throw new Error(`HTTP ${response.status}`);snapshot=await response.json()}catch(error){el('status').textContent=`Disconnected: ${error.message}`}finally{busy=false}}
+    lastFetch=performance.now();
+  }
+  el('filter').addEventListener('input',()=>{});
+  poll(); setInterval(()=>{if(performance.now()-lastFetch>=250)poll()},100);
+  requestAnimationFrame(render);
+})();
+</script>
+</body>
+</html>

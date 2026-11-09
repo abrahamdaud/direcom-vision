@@ -1,0 +1,9 @@
+[package]
+name = "direcom-scan"
+version = "0.1.0"
+edition = "2021"
+description = "Optional Rust filesystem inventory helper for Direcom Vision"
+
+[[bin]]
+name = "direcom-scan"
+path = "src/main.rs"
