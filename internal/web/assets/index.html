@@ -1,18 +1,326 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#0b1020"><title>Direcom Vision</title>
-<style>
-:root{color-scheme:dark;--bg:#0b1020;--panel:#111a2b;--panel2:#0e1727;--line:#24334c;--text:#e9f0fc;--muted:#8798b4;--green:#57e3ad;--blue:#79aaff;--red:#ff7c91;--amber:#f4c66b}*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 16% -10%,#203651 0,transparent 42%),var(--bg);color:var(--text);font:13px/1.5 Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,sans-serif}.app{min-height:100vh;display:grid;grid-template-columns:238px minmax(0,1fr)}aside{border-right:1px solid var(--line);background:#0b1220;padding:24px 16px;display:flex;flex-direction:column;gap:26px}.brand{display:flex;align-items:center;gap:11px;padding:0 6px}.logo{height:38px;width:38px;border-radius:12px;background:linear-gradient(135deg,#57e3ad,#78aaff);display:grid;place-items:center;color:#0b1020;font-size:19px;font-weight:900;box-shadow:0 8px 24px #57e3ad22}.brand b{font-size:14px;letter-spacing:.02em}.brand small{display:block;color:var(--muted);font-size:11px}.section-title{color:#71829e;text-transform:uppercase;letter-spacing:.12em;font-size:10px;font-weight:700;padding:0 8px}.nav{display:grid;gap:5px}.nav a{color:#aab8cd;text-decoration:none;padding:9px 10px;border-radius:8px}.nav a.active,.nav a:hover{background:#17263a;color:var(--text)}.nav a span{display:inline-block;width:25px;color:var(--blue)}.side-root{margin-top:auto;border:1px solid var(--line);background:#101a29;border-radius:11px;padding:12px;color:var(--muted);font-size:11px;overflow-wrap:anywhere}.side-root strong{display:block;color:var(--text);margin-bottom:5px}.main{min-width:0;padding:25px clamp(16px,3vw,38px)}.topbar{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:24px}.title h1{font-size:21px;margin:0;letter-spacing:-.03em}.title p{margin:3px 0;color:var(--muted)}.actions{display:flex;gap:8px}.btn{border:1px solid var(--line);color:var(--text);background:#142035;border-radius:8px;padding:8px 11px;text-decoration:none;cursor:pointer;font:inherit}.btn:hover{border-color:#49658d;background:#1a2a42}.status{border:1px solid var(--line);border-radius:999px;padding:7px 11px;color:var(--muted);white-space:nowrap}.dot{display:inline-block;width:7px;height:7px;background:var(--green);border-radius:50%;margin-right:7px;box-shadow:0 0 10px #57e3ad}.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:14px}.card,.panel{border:1px solid var(--line);background:linear-gradient(145deg,#141f31,#101827);border-radius:12px}.card{padding:15px}.label{color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:.1em}.value{font-size:24px;font-weight:700;margin-top:3px}.content{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(290px,.85fr);gap:13px}.panel{overflow:hidden}.panel-head{padding:13px 15px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:10px}.panel-head h2{font-size:13px;margin:0}.filters{display:flex;flex-wrap:wrap;gap:7px;padding:10px 12px;border-bottom:1px solid var(--line);background:#0f1827}.input,.select{background:#0b1321;color:var(--text);border:1px solid #293953;border-radius:7px;padding:7px 8px;font:inherit;min-width:0}.input.search{flex:1;min-width:125px}.input.small{width:125px}.select{max-width:130px}.tree,.events{max-height:58vh;overflow:auto;padding:7px 12px}.row,.event{display:flex;align-items:center;gap:9px;padding:7px 5px;border-bottom:1px solid #1d2a3d;min-width:0}.row:last-child,.event:last-child{border:0}.icon{width:17px;text-align:center;color:var(--blue)}.path{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1}.size,.time{color:var(--muted);font-size:11px;white-space:nowrap}.badge{font-size:9px;text-transform:uppercase;letter-spacing:.06em;padding:3px 6px;border-radius:5px;background:#25344a;color:var(--muted)}.created{color:var(--green)}.modified{color:var(--blue)}.deleted{color:var(--red)}.empty{padding:24px;color:var(--muted);text-align:center}.foot{display:flex;justify-content:space-between;gap:10px;color:var(--muted);font-size:11px;margin-top:13px}.warn{color:var(--amber)}@media(max-width:980px){.app{grid-template-columns:190px minmax(0,1fr)}.content{grid-template-columns:1fr}.tree,.events{max-height:40vh}}@media(max-width:680px){.app{display:block}aside{display:none}.topbar{align-items:flex-start;flex-direction:column}.stats{grid-template-columns:repeat(2,1fr)}.actions{flex-wrap:wrap}.main{padding:18px 13px}.foot{flex-direction:column}}
-</style></head>
-<body><div class="app"><aside><div class="brand"><div class="logo">D</div><div><b>Direcom Vision</b><small>Filesystem observability</small></div></div><div><div class="section-title">Workspace</div><nav class="nav"><a class="active" href="#overview"><span>◈</span>Overview</a><a href="#tree-panel"><span>⌘</span>File explorer</a><a href="#activity-panel"><span>◷</span>Activity history</a></nav></div><div class="side-root"><strong>MONITORED ROOT</strong><span id="root-side">Connecting…</span></div></aside><main class="main" id="overview"><header class="topbar"><div class="title"><h1>Monitor overview</h1><p>Live filesystem inventory and change history</p></div><div class="actions"><a class="btn" href="/api/export?format=json">↓ Export JSON</a><a class="btn" href="/api/export?format=csv">↓ Export CSV</a><span class="status"><i class="dot"></i><span id="status">Connecting…</span></span></div></header>
-<section class="stats"><div class="card"><div class="label">Files</div><div class="value" id="files">—</div></div><div class="card"><div class="label">Directories</div><div class="value" id="dirs">—</div></div><div class="card"><div class="label">Total size</div><div class="value" id="bytes">—</div></div><div class="card"><div class="label">History events</div><div class="value" id="change-count">0</div></div></section>
-<section class="content"><div class="panel" id="tree-panel"><div class="panel-head"><h2>⌘ &nbsp;File explorer</h2><span class="badge" id="visible-count">0 items</span></div><div class="filters"><input id="filter" class="input search" placeholder="Search path or name…" aria-label="Search path or name"><input id="extension" class="input small" placeholder="Extension, e.g. .go" aria-label="Extension filter"><select id="kind" class="select" aria-label="Entry kind"><option value="all">All entries</option><option value="file">Files only</option><option value="dir">Directories</option></select><input id="min-size" class="input small" type="number" min="0" placeholder="Min bytes" aria-label="Minimum file size"><select id="sort" class="select" aria-label="Sort entries"><option value="path">Sort: path</option><option value="size">Sort: size</option><option value="modified">Sort: modified</option></select></div><div id="tree" class="tree"><div class="empty">Waiting for snapshot…</div></div></div>
-<div class="panel" id="activity-panel"><div class="panel-head"><h2>◷ &nbsp;Activity history</h2><span class="badge">Latest first</span></div><div id="events" class="events"><div class="empty">No changes detected yet.</div></div></div></section><footer class="foot"><span id="updated">Waiting for data</span><span>UI animation: up to 60 FPS · Scan interval: <span id="interval">—</span></span></footer></main></div>
-<script>
-(()=>{const el=id=>document.getElementById(id);let snapshot=null,lastFetch=0,busy=false,lastRender=0;const controls=['filter','extension','kind','min-size','sort'];const bytes=n=>{if(!n)return'0 B';const u=['B','KB','MB','GB','TB'];let i=0;while(n>=1024&&i<u.length-1){n/=1024;i++}return`${n.toFixed(i?1:0)} ${u[i]}`};const time=v=>{const d=new Date(v);return Number.isNaN(d.getTime())?'':d.toLocaleString()};
-function render(){const q=el('filter').value.trim().toLowerCase(),ext=el('extension').value.trim().toLowerCase().replace(/^\*?\./,''),kind=el('kind').value,min=Number(el('min-size').value)||0,sort=el('sort').value;if(snapshot){const entries=snapshot.entries||[],files=entries.filter(x=>!x.isDir),dirs=entries.filter(x=>x.isDir);el('files').textContent=files.length.toLocaleString();el('dirs').textContent=dirs.length.toLocaleString();el('bytes').textContent=bytes(files.reduce((a,x)=>a+x.size,0));el('change-count').textContent=(snapshot.events||[]).length.toLocaleString();el('root-side').textContent=snapshot.root;el('updated').textContent=`Snapshot updated ${time(snapshot.updatedAt)} · refresh target 60 FPS`;el('status').textContent=snapshot.error?'Scan warning':'Monitoring';el('status').className=snapshot.error?'warn':'';el('interval').textContent=`${Math.round((snapshot.intervalMs||250))} ms`;
-let visible=entries.filter(x=>x.path!=='.').filter(x=>!q||x.path.toLowerCase().includes(q)).filter(x=>!ext||(!x.isDir&&x.path.toLowerCase().split('/').pop().endsWith('.'+ext))).filter(x=>kind==='all'||(kind==='file'?!x.isDir:x.isDir)).filter(x=>x.isDir||x.size>=min);if(sort==='size')visible.sort((a,b)=>b.size-a.size||a.path.localeCompare(b.path));else if(sort==='modified')visible.sort((a,b)=>new Date(b.modifiedAt)-new Date(a.modifiedAt));else visible.sort((a,b)=>a.path.localeCompare(b.path,undefined,{numeric:true,sensitivity:'base'}));el('visible-count').textContent=`${visible.length.toLocaleString()} items`;const tree=el('tree');tree.replaceChildren();if(!visible.length){tree.innerHTML='<div class="empty">No entries match the current filters.</div>'}else visible.slice(0,2000).forEach(item=>{const row=document.createElement('div');row.className='row';row.style.paddingLeft=`${Math.min(item.path.split('/').length-1,12)*13+4}px`;const icon=document.createElement('span');icon.className='icon';icon.textContent=item.isDir?'▸':'·';const path=document.createElement('span');path.className='path';path.textContent=item.path;path.title=item.path;const size=document.createElement('span');size.className='size';size.textContent=item.isDir?'':bytes(item.size);const modified=document.createElement('span');modified.className='time';modified.textContent=time(item.modifiedAt);row.append(icon,path,size,modified);tree.append(row)});if(visible.length>2000){const note=document.createElement('div');note.className='empty';note.textContent='Showing first 2,000 matches; narrow your filters to see more.';tree.append(note)}
-const events=(snapshot.events||[]).slice().reverse().slice(0,250),box=el('events');box.replaceChildren();if(!events.length)box.innerHTML='<div class="empty">No changes detected yet.</div>';else events.forEach(e=>{const row=document.createElement('div');row.className='event';const badge=document.createElement('span');badge.className=`badge ${e.type}`;badge.textContent=e.type;const path=document.createElement('span');path.className='path';path.textContent=e.path;path.title=`${e.path} · ${e.isDir?'directory':'file'} · ${bytes(e.size)}${e.previousSize?` · was ${bytes(e.previousSize)}`:''}`;const tm=document.createElement('span');tm.className='time';tm.textContent=time(e.at);row.append(badge,path,tm);box.append(row)})}requestAnimationFrame(render)}
-async function poll(){if(!busy){busy=true;try{const r=await fetch('/api/snapshot',{cache:'no-store'});if(!r.ok)throw Error(`HTTP ${r.status}`);snapshot=await r.json()}catch(e){el('status').textContent=`Disconnected: ${e.message}`}finally{busy=false}}lastFetch=performance.now()}controls.forEach(id=>el(id).addEventListener('input',()=>{}));poll();setInterval(()=>{if(performance.now()-lastFetch>=250)poll()},100);requestAnimationFrame(render)})();
-</script></body></html>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Direcom Vision</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #09111d;
+      --bg2: #121c2b;
+      --panel: #101b2a;
+      --panel-alt: #172537;
+      --line: #2a3e55;
+      --text: #edf5ff;
+      --muted: #8ea2bc;
+      --blue: #7fb3ff;
+      --green: #59e0a5;
+      --amber: #f3c972;
+      --red: #ff7c8f;
+      --shadow: rgba(0, 0, 0, 0.25);
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; min-height: 100%; background: radial-gradient(circle at top, #18304f 0%, #09111d 45%); color: var(--text); font: 13px/1.5 Inter, Segoe UI, sans-serif; }
+    .app { display: grid; grid-template-columns: 230px 1fr; min-height: 100vh; }
+    aside { padding: 22px 16px; background: rgba(7, 14, 23, 0.8); border-right: 1px solid var(--line); }
+    .brand { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; padding: 4px 6px; }
+    .logo { width: 38px; height: 38px; border-radius: 12px; background: linear-gradient(135deg, var(--green), var(--blue)); color: #09111d; font-weight: 900; font-size: 18px; display: grid; place-items: center; box-shadow: 0 10px 30px rgba(91, 224, 165, 0.25); }
+    .brand small { display: block; color: var(--muted); font-size: 11px; }
+    .section { margin-top: 18px; }
+    .section-title { color: var(--muted); text-transform: uppercase; letter-spacing: 0.14em; font-size: 10px; padding: 0 8px; margin-bottom: 10px; }
+    .nav { display: grid; gap: 6px; }
+    .nav a { display: flex; align-items: center; gap: 8px; color: var(--muted); text-decoration: none; padding: 9px 10px; border-radius: 8px; }
+    .nav a.active, .nav a:hover { background: #162738; color: var(--text); }
+    .sidebar-box { margin-top: auto; padding: 12px; border-radius: 10px; background: var(--panel-alt); border: 1px solid var(--line); color: var(--muted); font-size: 11px; }
+    .sidebar-box strong { display: block; margin-bottom: 6px; color: var(--text); }
+    .main { padding: 28px clamp(16px, 3vw, 40px); }
+    .topbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 18px; }
+    .topbar h1 { margin: 0; font-size: 26px; letter-spacing: -0.03em; }
+    .topbar p { margin: 4px 0 0; color: var(--muted); }
+    .actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .btn, .status { border: 1px solid var(--line); border-radius: 8px; background: rgba(255,255,255,0.02); color: var(--text); padding: 8px 12px; font: inherit; text-decoration: none; display: inline-flex; align-items: center; }
+    .btn:hover { background: rgba(255,255,255,0.05); }
+    .status { color: var(--muted); }
+    .dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--green); box-shadow: 0 0 14px var(--green); margin-right: 8px; }
+    .stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-bottom: 16px; }
+    .card { border: 1px solid var(--line); background: linear-gradient(180deg, rgba(18, 31, 45, 0.95), rgba(12, 20, 32, 0.95)); border-radius: 12px; padding: 16px; box-shadow: 0 10px 18px var(--shadow); }
+    .card .label { text-transform: uppercase; font-size: 10px; letter-spacing: 0.12em; color: var(--muted); }
+    .card .value { margin-top: 7px; font-size: 26px; font-weight: 700; }
+    .content { display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(300px, 0.85fr); gap: 14px; }
+    .panel { border: 1px solid var(--line); background: rgba(12, 19, 29, 0.95); border-radius: 12px; overflow: hidden; }
+    .panel-head { padding: 12px 14px; border-bottom: 1px solid var(--line); display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+    .panel-head h2 { margin: 0; font-size: 13px; }
+    .filter-box { display: flex; flex-wrap: wrap; gap: 8px; padding: 10px 12px; border-bottom: 1px solid var(--line); background: rgba(18, 32, 48, 0.7); }
+    .input, .select { background: #0c1626; color: var(--text); border: 1px solid var(--line); border-radius: 7px; padding: 7px 8px; font: inherit; }
+    .input.search { flex: 1 1 160px; min-width: 120px; }
+    .input.short { width: 128px; }
+    .select { min-width: 120px; }
+    .tree, .events { padding: 8px 12px; max-height: 60vh; overflow: auto; }
+    .row, .event { display: flex; align-items: center; gap: 9px; padding: 7px 4px; border-bottom: 1px solid rgba(255,255,255,0.04); min-width: 0; }
+    .row:last-child, .event:last-child { border-bottom: none; }
+    .icon { width: 16px; color: var(--blue); text-align: center; }
+    .path { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .size, .time { color: var(--muted); font-size: 11px; white-space: nowrap; }
+    .badge { display: inline-block; font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase; padding: 3px 6px; border-radius: 5px; background: #1d2d41; color: var(--text); }
+    .badge.created { background: rgba(89,224,165,0.15); color: var(--green); }
+    .badge.modified { background: rgba(127,179,255,0.15); color: var(--blue); }
+    .badge.deleted { background: rgba(255,124,143,0.15); color: var(--red); }
+    .empty { padding: 22px; text-align: center; color: var(--muted); }
+    .foot { margin-top: 14px; display: flex; justify-content: space-between; gap: 8px; color: var(--muted); font-size: 12px; }
+    .warn { color: var(--amber); }
+    @media (max-width: 980px) { .app { grid-template-columns: 1fr; } aside { display: none; } .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); } .content { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside>
+      <div class="brand">
+        <div class="logo">D</div>
+        <div>
+          <div><strong>Direcom Vision</strong></div>
+          <small>Filesystem observability</small>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Workspace</div>
+        <nav class="nav">
+          <a href="#" class="active">◈ Overview</a>
+          <a href="#">⌘ Explorer</a>
+          <a href="#">◷ Activity</a>
+        </nav>
+      </div>
+
+      <div class="sidebar-box">
+        <strong>MONITORED ROOT</strong>
+        <span id="root-side">Connecting…</span>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div>
+          <h1>Monitor overview</h1>
+          <p>Real-time file system inventory and change history</p>
+        </div>
+        <div class="actions">
+          <a class="btn" href="/api/export?format=json">↓ Export JSON</a>
+          <a class="btn" href="/api/export?format=csv">↓ Export CSV</a>
+          <div class="status"><span class="dot"></span><span id="status">Connecting…</span></div>
+        </div>
+      </header>
+
+      <section class="stats">
+        <div class="card"><div class="label">Files</div><div class="value" id="files">—</div></div>
+        <div class="card"><div class="label">Directories</div><div class="value" id="dirs">—</div></div>
+        <div class="card"><div class="label">Total size</div><div class="value" id="bytes">—</div></div>
+        <div class="card"><div class="label">Events</div><div class="value" id="change-count">0</div></div>
+      </section>
+
+      <section class="content">
+        <div class="panel">
+          <div class="panel-head">
+            <h2>File explorer</h2>
+            <span class="badge" id="visible-count">0 items</span>
+          </div>
+          <div class="filter-box">
+            <input id="filter" class="input search" placeholder="Search path or file name…" aria-label="Search path" />
+            <input id="extension" class="input short" placeholder="Extension .go" aria-label="Extension filter" />
+            <select id="kind" class="select" aria-label="Kind filter">
+              <option value="all">All kinds</option>
+              <option value="file">Files</option>
+              <option value="dir">Directories</option>
+            </select>
+            <input id="min-size" class="input short" type="number" min="0" placeholder="Min bytes" aria-label="Minimum file size" />
+            <select id="sort" class="select" aria-label="Sorting">
+              <option value="path">Sort: path</option>
+              <option value="size">Sort: size</option>
+              <option value="modified">Sort: modified</option>
+            </select>
+          </div>
+          <div class="tree" id="tree"><div class="empty">Waiting for snapshot…</div></div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-head">
+            <h2>Activity history</h2>
+            <span class="badge">Latest first</span>
+          </div>
+          <div class="events" id="events"><div class="empty">No changes detected yet.</div></div>
+        </div>
+      </section>
+
+      <div class="foot">
+        <span id="updated">Waiting for data</span>
+        <span>Target: 60 FPS · Scan interval: <span id="interval">250 ms</span></span>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    (() => {
+      const el = (id) => document.getElementById(id);
+      let snapshot = null;
+      let lastFetch = 0;
+      let busy = false;
+
+      const formatBytes = (value) => {
+        if (!value) return '0 B';
+        const units = ['B', 'KB', 'MB', 'GB', 'TB'];
+        let n = value;
+        let i = 0;
+        while (n >= 1024 && i < units.length - 1) {
+          n /= 1024;
+          i += 1;
+        }
+        return `${n.toFixed(i > 0 ? 1 : 0)} ${units[i]}`;
+      };
+
+      const formatTime = (value) => {
+        const d = new Date(value);
+        if (Number.isNaN(d.getTime())) return '';
+        return d.toLocaleString();
+      };
+
+      const render = () => {
+        if (!snapshot) {
+          requestAnimationFrame(render);
+          return;
+        }
+
+        const q = (el('filter').value || '').trim().toLowerCase();
+        const ext = (el('extension').value || '').trim().toLowerCase().replace(/^\./, '');
+        const kind = el('kind').value;
+        const minSize = Number(el('min-size').value || 0);
+        const sort = el('sort').value;
+
+        const entries = snapshot.entries || [];
+        const files = entries.filter((x) => !x.isDir);
+        const dirs = entries.filter((x) => x.isDir);
+        el('files').textContent = files.length.toLocaleString();
+        el('dirs').textContent = dirs.length.toLocaleString();
+        el('bytes').textContent = formatBytes(files.reduce((sum, x) => sum + x.size, 0));
+        el('change-count').textContent = (snapshot.events || []).length.toLocaleString();
+        el('root-side').textContent = snapshot.root;
+        el('interval').textContent = `${snapshot.intervalMs || 250} ms`;
+        el('status').textContent = snapshot.error ? `Warning: ${snapshot.error}` : 'Monitoring';
+        el('status').classList.toggle('warn', !!snapshot.error);
+        el('updated').textContent = `Snapshot updated ${formatTime(snapshot.updatedAt)} · 60 FPS target`;
+
+        let visible = entries.filter((x) => x.path !== '.');
+        visible = visible.filter((x) => !q || x.path.toLowerCase().includes(q));
+        visible = visible.filter((x) => !ext || (x.path.toLowerCase().endsWith(`.${ext}`) || (x.path.toLowerCase().split('/').pop().toLowerCase().includes(`.${ext}`))));
+        visible = visible.filter((x) => kind === 'all' || (kind === 'file' ? !x.isDir : x.isDir));
+        visible = visible.filter((x) => !x.isDir || kind === 'all' || kind === 'dir');
+        visible = visible.filter((x) => x.isDir || x.size >= minSize);
+
+        if (sort === 'size') {
+          visible.sort((a, b) => (b.size || 0) - (a.size || 0) || a.path.localeCompare(b.path));
+        } else if (sort === 'modified') {
+          visible.sort((a, b) => new Date(b.modifiedAt) - new Date(a.modifiedAt));
+        } else {
+          visible.sort((a, b) => a.path.localeCompare(b.path, undefined, { numeric: true, sensitivity: 'base' }));
+        }
+
+        const treeBox = el('tree');
+        treeBox.replaceChildren();
+        if (!visible.length) {
+          treeBox.innerHTML = '<div class="empty">No entries match the current filters.</div>';
+        } else {
+          visible.slice(0, 2000).forEach((item) => {
+            const row = document.createElement('div');
+            row.className = 'row';
+            row.style.paddingLeft = `${Math.min((item.path.match(/\//g) || []).length * 10, 72) + 8}px`;
+            const icon = document.createElement('span');
+            icon.className = 'icon';
+            icon.textContent = item.isDir ? '▸' : '·';
+            const path = document.createElement('span');
+            path.className = 'path';
+            path.textContent = item.path;
+            path.title = item.path;
+            const size = document.createElement('span');
+            size.className = 'size';
+            size.textContent = item.isDir ? '' : formatBytes(item.size);
+            const time = document.createElement('span');
+            time.className = 'time';
+            time.textContent = formatTime(item.modifiedAt);
+            row.appendChild(icon);
+            row.appendChild(path);
+            row.appendChild(size);
+            row.appendChild(time);
+            treeBox.appendChild(row);
+          });
+          if (visible.length > 2000) {
+            const note = document.createElement('div');
+            note.className = 'empty';
+            note.textContent = 'Showing the first 2,000 entries; narrow the filters to see more.';
+            treeBox.appendChild(note);
+          }
+        }
+
+        const eventsBox = el('events');
+        eventsBox.replaceChildren();
+        const events = (snapshot.events || []).slice().reverse().slice(0, 250);
+        if (!events.length) {
+          eventsBox.innerHTML = '<div class="empty">No changes detected yet.</div>';
+        } else {
+          events.forEach((event) => {
+            const row = document.createElement('div');
+            row.className = 'event';
+            const badge = document.createElement('span');
+            badge.className = `badge ${event.type}`;
+            badge.textContent = event.type;
+            const path = document.createElement('span');
+            path.className = 'path';
+            path.textContent = event.path;
+            path.title = event.path;
+            const time = document.createElement('span');
+            time.className = 'time';
+            time.textContent = formatTime(event.at);
+            row.appendChild(badge);
+            row.appendChild(path);
+            row.appendChild(time);
+            eventsBox.appendChild(row);
+          });
+        }
+
+        el('visible-count').textContent = `${visible.length.toLocaleString()} items`;
+        requestAnimationFrame(render);
+      };
+
+      const poll = async () => {
+        if (busy) return;
+        busy = true;
+        try {
+          const res = await fetch('/api/snapshot', { cache: 'no-store' });
+          if (!res.ok) throw new Error(`HTTP ${res.status}`);
+          snapshot = await res.json();
+          lastFetch = performance.now();
+        } catch (err) {
+          el('status').textContent = `Disconnected: ${err.message}`;
+        } finally {
+          busy = false;
+        }
+      };
+
+      ['filter', 'extension', 'kind', 'min-size', 'sort'].forEach((id) => {
+        el(id).addEventListener('input', () => {
+          requestAnimationFrame(render);
+        });
+        el(id).addEventListener('change', () => {
+          requestAnimationFrame(render);
+        });
+      });
+
+      poll();
+      setInterval(() => {
+        if (performance.now() - lastFetch > 250) {
+          poll();
+        }
+      }, 100);
+      requestAnimationFrame(render);
+    })();
+  </script>
+</body>
+</html>
